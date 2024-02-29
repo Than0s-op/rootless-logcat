@@ -19,21 +19,34 @@ import java.util.regex.Pattern
 
 class Line(val content: String) {
 
-    var level = 'D'
-    var tag: String? = null
+    var date:String? = null
+    var time:String? = null
+    var PID:String? = null
+    var TID:String? = null
+    var priority:Char? = null
+    var tag:String? = null
+    var message:String? = null
 
     init {
-        val matcher = linePattern.matcher(
-            content
-        )
-        if (matcher.matches()) {
-            level = matcher.group(1)?.get(0) ?: level
-            tag = matcher.group(2)?.trim { it <= ' ' }
+        val list = content.split("\\s+".toRegex())
+        if(list.size > 5) {
+            date = list[0]
+            time = list[1]
+            PID = list[2] // process ID
+            TID = list[3] // thread ID
+            priority = list[4][0] // priority D,W,E,V
+            tag = list[5]
+            message = list.subList(6, list.size).let {
+                var concat = ""
+                for (i in it) concat += "$i "
+                concat
+            }
         }
     }
-
-    companion object {
-        private val linePattern = Pattern.compile("\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d (\\w)/(\\w+).*")
-    }
+//
+//    companion object {
+//        private val linePattern =
+//            Pattern.compile("\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d (\\w)/(\\w+).*")
+//    }
 
 }

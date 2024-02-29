@@ -37,7 +37,7 @@ class RemoteReader(private val keyPair: KeyPair) : Reader {
             connection = AdbConnection.create(socket, crypto)
             connection.connect()
             updateHandler.update(R.string.status_opening, null)
-            val stream = connection.open("shell:logcat -v time")
+            val stream = connection.open("shell:logcat")
             updateHandler.update(R.string.status_active, null)
             while (!updateHandler.isCancelled) {
                 val lines: MutableList<String> = ArrayList()

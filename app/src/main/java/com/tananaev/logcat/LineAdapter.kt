@@ -18,6 +18,7 @@ package com.tananaev.logcat
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
@@ -157,10 +158,14 @@ class LineAdapter : RecyclerView.Adapter<LineViewHolder>() {
             holder.textView.text = content
         }
         holder.itemView.setBackgroundColor(context.resources.getColor(if (position % 2 == 0) R.color.row_bg_color_even else R.color.row_bg_color_odd))
-        when (item.level) {
-            'W' -> holder.textView.setTextColor(context.resources.getColor(R.color.colorWarning))
-            'E', 'A' -> holder.textView.setTextColor(context.resources.getColor(R.color.colorError))
-            else -> holder.textView.setTextColor(context.resources.getColor(R.color.colorNormal))
+
+        when (item.priority) {
+            'V' -> holder.textView.setTextColor(Color.parseColor("#BBBBBB"))
+            'D' -> holder.textView.setTextColor(Color.parseColor("#299999"))
+            'I' -> holder.textView.setTextColor(Color.parseColor("#ABC023"))
+            'W' -> holder.textView.setTextColor(Color.parseColor("#BBB529"))
+            'E' -> holder.textView.setTextColor(Color.parseColor("#FF6B68"))
+            'A' -> holder.textView.setTextColor(Color.parseColor("#FF6B68"))
         }
     }
 
